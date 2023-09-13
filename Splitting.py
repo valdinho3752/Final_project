@@ -10,9 +10,10 @@ r_splitter = RecursiveCharacterTextSplitter( chunk_size = chunk_size, chunk_over
 c_splitter = CharacterTextSplitter( chunk_size = chunk_size, chunk_overlap = chunk_overlap, separator = ' ')
 
 def splitter(data):
+    texts_splitted = []
     for doc in data:
-        doc = c_splitter.split_text(doc[0].__str__())
-        print("\n")
-    return data
+        text = c_splitter.split_text(doc[0].page_content)
+        texts_splitted.append(text)
+    return texts_splitted
 
-print(splitter(data[0]))
+print(splitter(data))
