@@ -5,6 +5,7 @@ from dotenv import load_dotenv
 import re
 import glob
 from langchain.document_loaders import WebBaseLoader
+from langchain.document_loaders import PyPDFLoader
 
 
 load_dotenv() # read local .env file
@@ -37,6 +38,7 @@ print(response.text)
 '''
 
 files = glob.glob("*.txt")
+pdf_files = glob.glob("*.pdf")
 
 def obtain_links(files):
     link_s = []
@@ -63,17 +65,20 @@ def remove_special_characters(text):
 
     return text
         
-def load_data(links):
+def load_data(links,pdf_paths):
     docs = []
     for link in links:
       loader = WebBaseLoader(link)
       doc = loader.load() 
       docs.append(doc)
+    for path in pdf_paths:
+      loader = PyPDFLoader(path)
+      pages = loader.load()
+      docs.append(pages)
     return docs
 
 links = obtain_links(files)
 
-docs = load_data(links)
-print(docs[0])
-print(docs[1])
-    
+docs = load_data(links, pdf_files)
+
+print(docs[-1])    
