@@ -16,8 +16,8 @@ class Splitter:
         return chunks
     
 
-split = Splitter()
-print(split.splitted_data)
+# split = Splitter()
+# print(split.splitted_data)
 # print(type(split.splitted_data))
 # print(type(split.splitted_data[0]))
 # print(type(split.splitted_data[0][0]))

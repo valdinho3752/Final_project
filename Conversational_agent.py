@@ -1,21 +1,21 @@
 from langchain.chains import ConversationalRetrievalChain
-from OpenIA_connection import GPT_connection
 from Vector_store import Vector_Store
 from langchain.llms import OpenAI
 
-vectorstore = Vector_Store().vectordb
+class Conv_agent:
+    def __init__(self) :
+        self.vectorstore = Vector_Store().vectordb
 
-chat = ConversationalRetrievalChain.from_llm(OpenAI(temperature=0), vectorstore.as_retriever())
+        self.chat = ConversationalRetrievalChain.from_llm(OpenAI(temperature=0), self.vectorstore.as_retriever())
 
-chat_history = []
-    
-def conversation(user_message, history):
-    # Get response from QA chain
-    response = chat({"question": user_message, "chat_history": history})
-    # Append user message and response to chat history
-    history.append((user_message, response["answer"]))
+        self.chat_history = []
+        
+    def conversation(self, user_message):
+        response = self.chat({"question": user_message, "chat_history": self.chat_history})
+        self.chat_history.append((user_message, response["answer"]))
 
-    return response["answer"]
+        return response["answer"]
 
-conv = conversation('que es la maquina de turing', chat_history)
-print(conv)
+# conv = Conv_agent()
+
+# print(conv.conversation('como instalo windows'))

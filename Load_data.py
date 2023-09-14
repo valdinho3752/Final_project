@@ -1,16 +1,12 @@
 import re
 import glob
-from langchain.document_loaders import DirectoryLoader
 from langchain.document_loaders import WebBaseLoader
-from langchain.document_loaders import PyPDFLoader
 
 
 class LoadData:
 
   def __init__(self):
     self.files = glob.glob("*.txt")
-    # self.pdf_files = glob.glob("*.pdf")
-    # self.pdf_loader = DirectoryLoader('./Reports/', self.pdf_files)
     self.links = self.obtain_links(self.files)
     self.docs = self.load_data(self.links)
   
@@ -38,7 +34,7 @@ class LoadData:
     docs = loader.load()
     return docs
 
-loader = LoadData()
-print(loader.docs)
-print(type(loader.docs))
-print(type(loader.docs[0]))
+# loader = LoadData()
+# print(loader.docs)
+# print(type(loader.docs))
+# print(type(loader.docs[0]))
