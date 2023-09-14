@@ -3,32 +3,33 @@ import openai
 import sys
 from dotenv import load_dotenv
 
+class GPT_connection:
+  def __init__(self):
+    load_dotenv() # read local .env file
+    self.apiKey = openai.api_key = os.getenv('OPENAI_API_KEY')
 
-load_dotenv() # read local .env file
-openai.api_key = os.getenv('OPENAI_API_KEY')
+  '''
+  import requests
+  import json
 
-'''
-import requests
-import json
+  url = "https://api.openai.com/v1/chat/completions"
 
-url = "https://api.openai.com/v1/chat/completions"
+  payload = json.dumps({
+    "model": "gpt-3.5-turbo",
+    "messages": [
+      {
+        "role": "user",
+        "content": "que es la relatividad?"
+      }
+    ],
+    "temperature": 0.7
+  })
+  headers = {
+    'Content-Type': 'application/json',
+    'Authorization': f'Bearer {openai_api_key}'
+  }
 
-payload = json.dumps({
-  "model": "gpt-3.5-turbo",
-  "messages": [
-    {
-      "role": "user",
-      "content": "que es la relatividad?"
-    }
-  ],
-  "temperature": 0.7
-})
-headers = {
-  'Content-Type': 'application/json',
-  'Authorization': f'Bearer {openai_api_key}'
-}
+  response = requests.request("POST", url, headers=headers, data=payload)
 
-response = requests.request("POST", url, headers=headers, data=payload)
-
-print(response.text)
-'''
+  print(response.text)
+  '''

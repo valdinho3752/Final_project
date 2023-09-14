@@ -12,10 +12,12 @@ class Splitter:
         self.splitted_data = self.split(self.data)
     
     def split(self, data):
-        texts_splitted = []
-        for doc in data:
-            text = self.c_splitter.split_text(doc[0].page_content)
-            texts_splitted.append(text)
-        return texts_splitted
-#split = Splitter()
-#print(split.split(split.data))
+        chunks = self.c_splitter.split_documents(data)
+        return chunks
+    
+
+split = Splitter()
+print(split.splitted_data)
+# print(type(split.splitted_data))
+# print(type(split.splitted_data[0]))
+# print(type(split.splitted_data[0][0]))

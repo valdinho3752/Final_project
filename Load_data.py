@@ -1,5 +1,6 @@
 import re
 import glob
+from langchain.document_loaders import DirectoryLoader
 from langchain.document_loaders import WebBaseLoader
 from langchain.document_loaders import PyPDFLoader
 
@@ -8,9 +9,10 @@ class LoadData:
 
   def __init__(self):
     self.files = glob.glob("*.txt")
-    self.pdf_files = glob.glob("*.pdf")
+    # self.pdf_files = glob.glob("*.pdf")
+    # self.pdf_loader = DirectoryLoader('./Reports/', self.pdf_files)
     self.links = self.obtain_links(self.files)
-    self.docs = self.load_data(self.links, self.pdf_files)
+    self.docs = self.load_data(self.links)
   
   def obtain_links(self, files):
       link_s = []
@@ -31,14 +33,12 @@ class LoadData:
       text = re.sub(pattern, '', text)
       return text
           
-  def load_data(self, links,pdf_paths):
-      docs = []
-      for link in links:
-        loader = WebBaseLoader(link)
-        doc = loader.load() 
-        docs.append(doc)
-      for path in pdf_paths:
-        loader = PyPDFLoader(path)
-        pages = loader.load()
-        docs.append(pages)
-      return docs
+  def load_data(self, links):
+    loader = WebBaseLoader(links)
+    docs = loader.load()
+    return docs
+
+loader = LoadData()
+print(loader.docs)
+print(type(loader.docs))
+print(type(loader.docs[0]))
