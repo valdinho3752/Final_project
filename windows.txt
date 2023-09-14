@@ -1,2 +1,9 @@
 https://www.neoguias.com/agregar-variable-entorno-windows/
 https://www.neoguias.com/agregar-directorio-path-windows/
+https://www.neoguias.com/instalar-php-windows/
+https://www.neoguias.com/instalar-apache-windows/
+https://www.neoguias.com/instalar-git-windows/
+https://www.neoguias.com/linea-de-comandos-windows/
+https://www.neoguias.com/instalar-macos-windows-virtualbox/
+https://www.neoguias.com/instalar-xampp-windows/
+https://www.neoguias.com/instalar-visual-c-redistributable/

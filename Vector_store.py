@@ -3,20 +3,21 @@ from Splitting import Splitter
 from langchain.embeddings import OpenAIEmbeddings
 from OpenIA_connection import GPT_connection
 
-db_directory = 'docs/chroma'
+class Vector_Store:
+    def __init__(self):
 
-api_key = GPT_connection().apiKey
+        self.db_directory = 'docs/chroma'
 
-embeddings = OpenAIEmbeddings(openai_api_key=api_key)
+        self.api_key = GPT_connection().apiKey
 
-docs = Splitter().splitted_data
+        self.embeddings = OpenAIEmbeddings(openai_api_key=self.api_key)
 
-documents = []
+        self.docs = Splitter().splitted_data
 
-vectordb = Chroma.from_documents(documents=docs, embedding=embeddings, persist_directory=db_directory)
+        self.documents = []
 
+        self.vectordb = Chroma.from_documents(documents=self.docs, embedding=self.embeddings, persist_directory=self.db_directory)
 
-print(vectordb._collection.count())
 
 # print(docs)
 # print(type(docs))
