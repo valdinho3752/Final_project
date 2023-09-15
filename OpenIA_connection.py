@@ -1,35 +1,41 @@
 import os
 import openai
-import sys
 from dotenv import load_dotenv
+import requests
+import json
 
 class GPT_connection:
   def __init__(self):
     load_dotenv() # read local .env file
     self.apiKey = openai.api_key = os.getenv('OPENAI_API_KEY')
+    
 
-  '''
-  import requests
-  import json
+  def talk(self, prompt):
+    str_key = os.getenv('OPENAI_API_KEY')
+    url = "https://api.openai.com/v1/chat/completions"
 
-  url = "https://api.openai.com/v1/chat/completions"
+    payload = json.dumps({
+      "model": "gpt-3.5-turbo",
+      "messages": [
+        {
+          "role": "user",
+          "content": prompt
+        }
+      ],
+      "temperature": 0.7
+    })
+    headers = {
+      'Content-Type': 'application/json',
+      'Authorization': f'Bearer {str_key}'
+    }
 
-  payload = json.dumps({
-    "model": "gpt-3.5-turbo",
-    "messages": [
-      {
-        "role": "user",
-        "content": "que es la relatividad?"
-      }
-    ],
-    "temperature": 0.7
-  })
-  headers = {
-    'Content-Type': 'application/json',
-    'Authorization': f'Bearer {openai_api_key}'
-  }
+    response = requests.request("POST", url, headers=headers, data=payload)
 
-  response = requests.request("POST", url, headers=headers, data=payload)
+    data = response.json()
+    message = data["choices"][0]["message"]["content"]
 
-  print(response.text)
-  '''
+    return message
+  
+# gpt = GPT_connection()
+
+# print(gpt.talk("Hola como estas?"))

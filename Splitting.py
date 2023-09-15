@@ -5,8 +5,8 @@ class Splitter:
 
     def __init__(self):
         self.data = LoadData().docs
-        self.chunk_size = 100
-        self.chunk_overlap = 50
+        self.chunk_size = 1000
+        self.chunk_overlap = 500
         self.r_splitter = RecursiveCharacterTextSplitter( chunk_size = self.chunk_size, chunk_overlap = self.chunk_overlap, separators=["\n", "\n\n","\n\n" * 3, " ", ""])
         self.c_splitter = CharacterTextSplitter( chunk_size = self.chunk_size, chunk_overlap = self.chunk_overlap, separator = ' ')
         self.splitted_data = self.split(self.data)
