@@ -25,10 +25,22 @@ class Conv_agent:
     
     def KG_insert(self,msg):
         if self.anzo_conn.connect():
-            prompt = f"Convierta el siguiente texto delimitado por triple paréntesis en una consulta de inserción SPARQL sin ningún prefijo a un grafo llamado SOPORTE_TECNICO ((({msg})))"
+            prompt = f"dame solo las tres palabras principales del texto delimitado por tres parentesis que te mande, devuelve solo tres palabras separadas por comas((({msg})))"
             res = self.gpt_conn.talk(prompt)
+            triplet = res.split(",")
             self.anzo_conn.sparql.method = 'POST'
-            self.anzo_conn.sparql.setQuery(f""" {res}""".encode("utf-8"))
+            query = f"""
+                INSERT DATA
+                {{
+                GRAPH <TECH_SUPP>
+                {{
+                    _:sujeto <sujeto> "{triplet[0]}" ;
+                            <verbo> "{triplet[1]}" ;
+                            <predicado> "{triplet[2]}" .
+                }}
+                }}
+            """
+            self.anzo_conn.sparql.setQuery(query.encode("utf-8"))
             self.anzo_conn.sparql.setReturnFormat(JSON)
 
             results = self.anzo_conn.sparql.query().convert()
